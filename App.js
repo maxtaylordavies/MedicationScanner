@@ -1,30 +1,58 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
+
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import {StyleSheet, View, Modal, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import StyledButton from "./Components/StyledButton";
+import CameraModal from "./Components/CameraModal";
 
 type Props = {};
-export default class App extends Component<Props> {
+
+type State = {
+    showModal: boolean
+};
+
+export default class App extends Component<Props, State> {
+  constructor(props) {
+      super(props);
+      this.state = {
+          showModal: false
+      }
+  }
+
+  onButtonPressed = () => {
+    this.setState({
+        showModal: true
+    })
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+          <Icon
+              name="pills"
+              color="#ffa5bd"
+              size={120}
+              style={{marginBottom: 20}}
+          />
+          <StyledButton
+              text="Scan new drug"
+              backgroundColor="white"
+              textColor="#6a6b6a"
+              textSize={24}
+              height={60}
+              width={300}
+              borderRadius={25}
+              onPress={this.onButtonPressed}
+          />
+          <Modal
+              visible={this.state.showModal}
+              transparent={true}
+          >
+              <View style={styles.modal}>
+                  <Text>hi</Text>
+              </View>
+          </Modal>
       </View>
     );
   }
@@ -35,16 +63,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#1b916c',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  modal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 30,
+    marginTop: 150,
+    marginBottom: 150,
+    backgroundColor: "white",
+    borderRadius: 25
+  }
 });
