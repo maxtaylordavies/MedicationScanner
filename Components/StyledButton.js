@@ -28,6 +28,7 @@ export default class StyledButton extends Component<Props> {
         };
 
         let textStyle = {
+            fontFamily: "Inter",
             fontSize: this.props.textSize,
             color: this.props.textColor
         };

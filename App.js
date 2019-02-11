@@ -20,59 +20,84 @@ export default class App extends Component<Props, State> {
       }
   }
 
-  onButtonPressed = () => {
-    this.setState({
-        showModal: true
-    })
+  toggleModal = () => {
+      this.setState({
+          showModal: !this.state.showModal
+      });
   };
 
   render() {
     return (
-      <View style={styles.container}>
-          <Icon
-              name="pills"
-              color="#ffa5bd"
-              size={120}
-              style={{marginBottom: 20}}
-          />
-          <StyledButton
-              text="Scan new drug"
-              backgroundColor="white"
-              textColor="#6a6b6a"
-              textSize={24}
-              height={60}
-              width={300}
-              borderRadius={25}
-              onPress={this.onButtonPressed}
-          />
-          <Modal
-              visible={this.state.showModal}
-              transparent={true}
-          >
-              <View style={styles.modal}>
-                  <Text>hi</Text>
+        <View style={{opacity: (this.state.showModal ? 0.2 : 1)}}>
+          <View style={styles.containerTop}>
+              <View style={styles.textContainer}>
+                  <Text style={styles.text}>Welcome To DrugScan 💊 📸</Text>
               </View>
-          </Modal>
-      </View>
+          </View>
+          <View style={styles.containerBottom}>
+              <StyledButton
+                  text="Scan new drug"
+                  backgroundColor="white"
+                  textColor="black"
+                  textSize={22}
+                  height={60}
+                  width={250}
+                  borderRadius={25}
+                  onPress={this.toggleModal}
+              />
+              <Modal
+                  visible={this.state.showModal}
+                  animationType="slide"
+                  transparent={true}
+              >
+                  <View style={styles.modal}>
+                      <CameraModal closeModal={this.toggleModal}/>
+                  </View>
+              </Modal>
+          </View>
+        </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1b916c',
+  containerTop: {
+    height: "70%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  containerBottom: {
+    height: "30%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ff3d71"
+  },
+  textContainer: {
+    width: 250,
+    justifyContent: "center",
+    alignItems: "center",
+    //marginBottom: 50
+  },
+  text: {
+    color: "black",
+    fontFamily: "Inter",
+    fontWeight: "bold",
+    fontSize: 48
   },
   modal: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    margin: 30,
-    marginTop: 150,
-    marginBottom: 150,
+    margin: 20,
+    marginTop: 60,
+    marginBottom: 60,
     backgroundColor: "white",
-    borderRadius: 25
+    borderRadius: 100,
+    //shadowColor: "grey",
+    //shadowOpacity: 0.5,
+    //shadowRadius: 100
   }
 });
